@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://ey4ly5ylbqfx"]
+
+[ext_resource type="Script" path="res://WeaponData.gd" id="1_xuaqf"]
+
+[node name="Weapon Configurations" type="Node"]
+
+[node name="Assault Rifle" type="Node3D" parent="."]
+script = ExtResource("1_xuaqf")
+
+[node name="Mesh" type="MeshInstance3D" parent="Assault Rifle"]
