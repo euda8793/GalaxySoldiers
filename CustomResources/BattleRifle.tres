@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="WeaponConfiguration" load_steps=2 format=3 uid="uid://iyhym5o07xwx"]
+
+[ext_resource type="Script" path="res://Scripts/WeaponConfiguration.gd" id="1_xfby8"]
+
+[resource]
+script = ExtResource("1_xfby8")
+fire_rate = 1.2
+name = "Battle Rifle"

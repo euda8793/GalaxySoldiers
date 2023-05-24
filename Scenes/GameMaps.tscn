@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxkm2uauvyamb"]
+
+[ext_resource type="PackedScene" uid="uid://q4nyhqqgg7wu" path="res://Scenes/GrassyMap.tscn" id="1_kg08p"]
+
+[node name="MapFactory" type="Node"]
+
+[node name="GrassyMap" parent="." instance=ExtResource("1_kg08p")]
+visible = false

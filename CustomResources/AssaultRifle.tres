@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeaponConfiguration" load_steps=2 format=3 uid="uid://cfbsqhox5wdru"]
+
+[ext_resource type="Script" path="res://Scripts/WeaponConfiguration.gd" id="1_pfilw"]
+
+[resource]
+script = ExtResource("1_pfilw")
+name = "Assault Rifle"
+fire_rate = 1.9
+max_angle = 30.0
+control_time = 0.5
+recoil_magnitude = -2.0
+recoil_up = 0.01
+recoil_down = 0.2

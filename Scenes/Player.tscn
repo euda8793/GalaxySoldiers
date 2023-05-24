@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://df77m4gxdw34c"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_ow5uy"]
+[ext_resource type="Resource" uid="uid://dmari3igvgx37" path="res://CustomResources/MainPlayer.tres" id="2_fgkbp"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_bqfi5"]
+radius = 0.05
+height = 0.2
+radial_segments = 24
+rings = 6
+
+[node name="Player" type="Node3D"]
+script = ExtResource("1_ow5uy")
+player_configuration = ExtResource("2_fgkbp")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_bqfi5")
