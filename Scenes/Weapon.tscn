@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dh1qkd5mi6ryx"]
+[gd_scene load_steps=12 format=3 uid="uid://dh1qkd5mi6ryx"]
 
 [ext_resource type="Script" path="res://Scripts/Weapon.gd" id="1_wlnip"]
 [ext_resource type="Resource" uid="uid://cfbsqhox5wdru" path="res://CustomResources/AssaultRifle.tres" id="2_pvhkc"]
+[ext_resource type="AudioStream" uid="uid://dhxr4sbyr36ne" path="res://Sounds/machinegunloop.ogg" id="3_hp2c8"]
+[ext_resource type="PackedScene" uid="uid://cw0qatpce12ux" path="res://Reticle.tscn" id="4_64u2r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u2qwr"]
 albedo_color = Color(0.196078, 0.196078, 0.196078, 1)
@@ -20,6 +22,35 @@ material = SubResource("StandardMaterial3D_6qj42")
 radial_segments = 5
 rings = 5
 
+[sub_resource type="Animation" id="Animation_xe05k"]
+resource_name = "MachineGun-loop"
+length = 0.3008
+loop_mode = 1
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GunSound")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("3_hp2c8")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+
+[sub_resource type="Animation" id="Animation_5c2p1"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k6eqr"]
+_data = {
+"MachineGun-loop": SubResource("Animation_xe05k"),
+"RESET": SubResource("Animation_5c2p1")
+}
+
 [node name="Weapon" type="Node3D"]
 script = ExtResource("1_wlnip")
 weapon_configuration = ExtResource("2_pvhkc")
@@ -34,11 +65,14 @@ skeleton = NodePath("../..")
 [node name="MuzzleFlash" type="MeshInstance3D" parent="Handle/Mesh"]
 unique_name_in_owner = true
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0.699216)
+visible = false
 mesh = SubResource("SphereMesh_wquwu")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.99959, 0.6, 0)
-current = true
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_k6eqr")
+}
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.411896, 0.911231, 0, -0.911231, -0.411896, 0, 2.52382, 0)
+[node name="GunSound" type="AudioStreamPlayer3D" parent="."]
+
+[node name="Reticle" parent="." instance=ExtResource("4_64u2r")]
