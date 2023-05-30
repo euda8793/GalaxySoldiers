@@ -23,6 +23,8 @@ func _ready():
 	recoil_down = weapon_configuration.fire_rate / 20.0
 
 func begin_shooting() -> void:
+	if (rotate_tween != null and rotate_tween.is_running()): return
+	
 	rotate_tween = get_tree().create_tween()
 	muzzle_tween = get_tree().create_tween()
 	sound_player.play("MachineGun-loop")
