@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtho7el3m8fpb"]
+
+[ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_6a1kd"]
+[ext_resource type="PackedScene" uid="uid://dh1qkd5mi6ryx" path="res://Scenes/Weapon.tscn" id="1_ebqdb"]
+[ext_resource type="Script" path="res://Scripts/CameraController.gd" id="2_8t4es"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_bqfi5"]
+radius = 0.259
+height = 1.474
+radial_segments = 24
+rings = 6
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7k411"]
+radius = 0.25
+height = 1.5
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_6a1kd")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_bqfi5")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_7k411")
+
+[node name="FirstPersonCam" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.126, 0.665, -0.417)
+current = true
+fov = 81.2
+script = ExtResource("2_8t4es")
+
+[node name="FirstPersonWeapon" parent="FirstPersonCam" instance=ExtResource("1_ebqdb")]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -7.86805e-08, 0, 1, 0, 8.74228e-08, 0, -0.9, 0.595, -0.529, 0.273)
+
+[node name="ActionCamera" type="Camera3D" parent="."]
+transform = Transform3D(-0.0204559, 0.660945, -0.750155, 0.0180165, 0.750434, 0.6607, 0.999628, 3.16539e-08, -0.0272587, -3.0897, 4.53835, 0)
+visible = false

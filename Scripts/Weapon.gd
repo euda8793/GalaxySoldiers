@@ -10,7 +10,7 @@ var weapon_configuration : WeaponConfiguration
 var sound_player := $AnimationPlayer as AnimationPlayer
 
 @onready
-var reticle := $Reticle as Reticle
+var reticle := $ReticleOverlay as Reticle
 
 var rotate_tween : Tween
 var muzzle_tween : Tween
@@ -56,11 +56,3 @@ func stop_shooting() -> void:
 	muzzle_tween.tween_property($Handle/Mesh/MuzzleFlash, "scale", Vector3.ZERO, recoil_down)
 	muzzle_tween.tween_property($Handle/Mesh/MuzzleFlash, "visible", false, 0.01)
 	muzzle_tween.tween_callback(func (): muzzle_tween.kill())
-
-
-func _input(_event):
-	if Input.is_action_just_pressed("ui_accept"):
-		begin_shooting()
-	
-	if Input.is_action_just_released("ui_accept"):
-		stop_shooting()

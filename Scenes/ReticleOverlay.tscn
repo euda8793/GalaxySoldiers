@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://byf3s1pg13rw0"]
+
+[ext_resource type="SpriteFrames" uid="uid://mtlba2y1cwq6" path="res://Textures/FirstReticle.tres" id="1_qnd7w"]
+[ext_resource type="Script" path="res://Scripts/Reticle.gd" id="1_wrlm1"]
+[ext_resource type="Shader" path="res://ShaderCode/Reticle.gdshader" id="2_ox266"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ev5jt"]
+shader = ExtResource("2_ox266")
+shader_parameter/reticle_color = Color(0.121569, 0.0784314, 1, 1)
+
+[node name="ReticleOverlay" type="CenterContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wrlm1")
+
+[node name="Center" type="Control" parent="."]
+layout_mode = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Center"]
+unique_name_in_owner = true
+texture_filter = 1
+material = SubResource("ShaderMaterial_ev5jt")
+scale = Vector2(3, 3)
+sprite_frames = ExtResource("1_qnd7w")

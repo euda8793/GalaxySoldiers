@@ -1,15 +1,10 @@
-extends Node2D
+extends Control
 class_name Reticle
 
 @onready
-var sprite := $AnimatedSprite2D as AnimatedSprite2D
+var sprite := %AnimatedSprite2D as AnimatedSprite2D
 
 var tween : Tween
-
-func _ready():
-	var x_offset = get_viewport_rect().size.x / 2.0
-	var y_offset = get_viewport_rect().size.y / 2.0
-	position = Vector2(x_offset, y_offset)
 
 func start():
 	tween = get_tree().create_tween()
