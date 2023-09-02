@@ -1,0 +1,100 @@
+[gd_scene load_steps=15 format=3 uid="uid://b7ap461t7c1j6"]
+
+[ext_resource type="Script" path="res://Scripts/Weapon.gd" id="1_x78k5"]
+[ext_resource type="Script" path="res://Scripts/GunModel.gd" id="3_4pn6d"]
+[ext_resource type="Script" path="res://Scripts/WeaponConfiguration.gd" id="3_duh78"]
+[ext_resource type="AudioStream" uid="uid://dhxr4sbyr36ne" path="res://Sounds/machinegunloop.ogg" id="4_5g0i3"]
+[ext_resource type="PackedScene" uid="uid://ce35hcslakthg" path="res://Scenes/Aim.tscn" id="5_drb7s"]
+
+[sub_resource type="Resource" id="Resource_5jo4q"]
+script = ExtResource("3_duh78")
+name = ""
+fire_rate = 0.5
+recoil_magnitude = 1.2
+
+[sub_resource type="Resource" id="Resource_lejux"]
+script = ExtResource("3_duh78")
+name = "thingy"
+fire_rate = 0.5
+recoil_magnitude = 1.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u2qwr"]
+albedo_color = Color(0.196078, 0.196078, 0.196078, 1)
+metallic = 0.13
+
+[sub_resource type="BoxMesh" id="BoxMesh_c1gvm"]
+material = SubResource("StandardMaterial3D_u2qwr")
+size = Vector3(0.1, 0.1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6qj42"]
+transparency = 1
+albedo_color = Color(1, 0.513726, 0.360784, 0.286275)
+
+[sub_resource type="SphereMesh" id="SphereMesh_wquwu"]
+material = SubResource("StandardMaterial3D_6qj42")
+radial_segments = 5
+rings = 5
+
+[sub_resource type="Animation" id="Animation_xe05k"]
+resource_name = "MachineGun-loop"
+length = 0.3008
+loop_mode = 1
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GunSound")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_5g0i3")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+
+[sub_resource type="Animation" id="Animation_5c2p1"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k6eqr"]
+_data = {
+"MachineGun-loop": SubResource("Animation_xe05k"),
+"RESET": SubResource("Animation_5c2p1")
+}
+
+[node name="WeaponCamera" type="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.126, 0.665, -0.417)
+script = ExtResource("1_x78k5")
+weapon_configuration = SubResource("Resource_5jo4q")
+
+[node name="Weapon" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -7.86805e-08, 0, 1, 0, 8.74228e-08, 0, -0.9, 0.595, -0.529, 0.273)
+
+[node name="GunModel" type="Node3D" parent="Weapon"]
+unique_name_in_owner = true
+script = ExtResource("3_4pn6d")
+weapon_configuration = SubResource("Resource_lejux")
+
+[node name="Mesh" type="MeshInstance3D" parent="Weapon/GunModel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0.7)
+mesh = SubResource("BoxMesh_c1gvm")
+skeleton = NodePath("../..")
+
+[node name="MuzzleFlash" type="MeshInstance3D" parent="Weapon/GunModel/Mesh"]
+unique_name_in_owner = true
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0.699216)
+visible = false
+mesh = SubResource("SphereMesh_wquwu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Weapon"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_k6eqr")
+}
+
+[node name="GunSound" type="AudioStreamPlayer3D" parent="Weapon"]
+
+[node name="Aim" parent="." instance=ExtResource("5_drb7s")]
+transform = Transform3D(-1, 0, -7.86805e-08, 0, 1, 0, 8.74228e-08, 0, -0.9, 0, 0, 0)

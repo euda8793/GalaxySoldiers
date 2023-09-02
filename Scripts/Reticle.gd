@@ -2,7 +2,7 @@ extends Control
 class_name Reticle
 
 @onready
-var sprite := %AnimatedSprite2D as AnimatedSprite2D
+var sprite := %"AnimatedSprite2D" as AnimatedSprite2D
 
 var tween : Tween
 

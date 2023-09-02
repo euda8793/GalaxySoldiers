@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://ce35hcslakthg"]
+
+[ext_resource type="Script" path="res://Scripts/Aim.gd" id="1_cp426"]
+[ext_resource type="PackedScene" uid="uid://byf3s1pg13rw0" path="res://Scenes/ReticleOverlay.tscn" id="2_5gs3a"]
+[ext_resource type="Script" path="res://Scripts/AimConfiguration.gd" id="2_m5lx6"]
+
+[sub_resource type="Resource" id="Resource_eujq4"]
+script = ExtResource("2_m5lx6")
+hit_radius_max = 4.0
+hit_radius_min = 1.0
+time_to_max_radius = 2.0
+time_to_hit = 0.12
+hit_distance = 4.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pp4r2"]
+
+[node name="Aim" type="Node3D"]
+script = ExtResource("1_cp426")
+aim_config = SubResource("Resource_eujq4")
+
+[node name="ReticleOverlay" parent="." instance=ExtResource("2_5gs3a")]
+texture_filter = 1
+material = SubResource("ShaderMaterial_pp4r2")
+
+[node name="HitPicker" type="RayCast3D" parent="."]
+enabled = false
+target_position = Vector3(0, 0, 1)

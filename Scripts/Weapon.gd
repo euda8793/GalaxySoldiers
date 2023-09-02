@@ -1,60 +1,42 @@
-@tool
-
-extends Node3D
+extends Camera3D
 class_name Weapon
 
 @export
 var weapon_configuration : WeaponConfiguration
 
 @onready
-var sound_player := $AnimationPlayer as AnimationPlayer
+var sound_player := %AnimationPlayer as AnimationPlayer
 
 @onready
-var reticle := $ReticleOverlay as Reticle
+var gun_model := %GunModel as GunModel
 
-var rotate_tween : Tween
-var muzzle_tween : Tween
+@export 
+var mouse_sensitivity := 2.0
 
-var recoil_up : float
-var recoil_down : float
+@export 
+var y_top := 80.0
+
+@export 
+var y_bottom := -60.0
 
 func _ready():
-	recoil_up = weapon_configuration.fire_rate / 30.0
-	recoil_down = weapon_configuration.fire_rate / 20.0
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	mouse_sensitivity = mouse_sensitivity / 1000
+	y_top = deg_to_rad(y_top)
+	y_bottom = deg_to_rad(y_bottom)
+
+func _input(event : InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		var adding_rotation = -event.relative.y * mouse_sensitivity
+		rotation.x = clamp(adding_rotation + rotation.x, y_bottom, y_top)
+
+	if Input.is_action_just_pressed("toggle_mouse"):
+		Input.mouse_mode =  Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
 
 func begin_shooting() -> void:
-	if (rotate_tween != null and rotate_tween.is_running()): return
-	
-	rotate_tween = get_tree().create_tween()
-	muzzle_tween = get_tree().create_tween()
 	sound_player.play("MachineGun-loop")
-	reticle.start()
-
-	rotate_tween.set_trans(Tween.TRANS_BOUNCE)
-	muzzle_tween.set_trans(Tween.TRANS_BOUNCE)
-
-	rotate_tween.set_loops()
-	rotate_tween.tween_property($Handle, "rotation_degrees", Vector3(-weapon_configuration.recoil_magnitude, 0.0, 0.0), recoil_up)
-	rotate_tween.tween_property($Handle, "rotation_degrees", Vector3.ZERO, recoil_down)
-
-	muzzle_tween.set_loops()
-	muzzle_tween.tween_property($Handle/Mesh/MuzzleFlash, "visible", true, 0.01)
-	muzzle_tween.tween_property($Handle/Mesh/MuzzleFlash, "scale", Vector3.ONE / 2.0, recoil_up)
-	muzzle_tween.tween_property($Handle/Mesh/MuzzleFlash, "scale", Vector3.ZERO, recoil_down)
-	muzzle_tween.tween_property($Handle/Mesh/MuzzleFlash, "visible", false, 0.01)
+	gun_model.start_movement()
 
 func stop_shooting() -> void:
-	rotate_tween.kill()
-	muzzle_tween.kill()
-
 	sound_player.stop()
-	reticle.stop()
-	rotate_tween = get_tree().create_tween()
-	muzzle_tween = get_tree().create_tween()
-
-	rotate_tween.tween_property($Handle, "rotation_degrees", Vector3.ZERO, recoil_down)
-	rotate_tween.tween_callback(func (): rotate_tween.kill())
-
-	muzzle_tween.tween_property($Handle/Mesh/MuzzleFlash, "scale", Vector3.ZERO, recoil_down)
-	muzzle_tween.tween_property($Handle/Mesh/MuzzleFlash, "visible", false, 0.01)
-	muzzle_tween.tween_callback(func (): muzzle_tween.kill())
+	gun_model.stop_movement()

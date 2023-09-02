@@ -1,7 +1,7 @@
 extends CharacterBody3D
 class_name PlayerController
 
-@onready var weapon := %FirstPersonWeapon as Weapon
+@onready var weapon := $WeaponCamera as Weapon
 @export var gravity_multiplier := 3.0
 @export var speed := 10
 @export var acceleration := 8

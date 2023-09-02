@@ -5,7 +5,7 @@ class_name WeaponConfiguration
 var name : String
 
 @export
-var fire_rate := 1.0
+var fire_rate := 0.5
 
 @export
 var recoil_magnitude := 1.2
