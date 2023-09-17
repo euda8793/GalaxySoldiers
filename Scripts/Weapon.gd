@@ -10,6 +10,9 @@ var sound_player := %AnimationPlayer as AnimationPlayer
 @onready
 var gun_model := %GunModel as GunModel
 
+@onready
+var aim := %Aim as Aim
+
 @export 
 var mouse_sensitivity := 2.0
 
@@ -26,17 +29,20 @@ func _ready():
 	y_bottom = deg_to_rad(y_bottom)
 
 func _input(event : InputEvent) -> void:
+	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED: return;
+	
 	if event is InputEventMouseMotion:
 		var adding_rotation = -event.relative.y * mouse_sensitivity
 		rotation.x = clamp(adding_rotation + rotation.x, y_bottom, y_top)
 
-	if Input.is_action_just_pressed("toggle_mouse"):
-		Input.mouse_mode =  Input.MOUSE_MODE_VISIBLE if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_CAPTURED
 
 func begin_shooting() -> void:
 	sound_player.play("MachineGun-loop")
 	gun_model.start_movement()
+	aim.start()
+	
 
 func stop_shooting() -> void:
 	sound_player.stop()
 	gun_model.stop_movement()
+	aim.stop()

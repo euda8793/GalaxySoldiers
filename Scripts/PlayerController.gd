@@ -21,6 +21,8 @@ func _ready():
 	mouse_sensitivity = mouse_sensitivity / 10.0
 
 func _input(event):
+	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED: return
+	
 	if event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
 
@@ -31,6 +33,7 @@ func _input(event):
 
 
 func _physics_process(delta: float) -> void:
+	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED: return
 	input_axis = Input.get_vector(&"ui_down", &"ui_up",
 			&"ui_left", &"ui_right")
 

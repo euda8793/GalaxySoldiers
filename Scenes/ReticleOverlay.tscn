@@ -1,12 +1,116 @@
-[gd_scene load_steps=5 format=3 uid="uid://byf3s1pg13rw0"]
+[gd_scene load_steps=17 format=3 uid="uid://byf3s1pg13rw0"]
 
-[ext_resource type="SpriteFrames" uid="uid://mtlba2y1cwq6" path="res://Textures/FirstReticle.tres" id="1_qnd7w"]
 [ext_resource type="Script" path="res://Scripts/Reticle.gd" id="1_wrlm1"]
-[ext_resource type="Shader" path="res://ShaderCode/Reticle.gdshader" id="2_ox266"]
+[ext_resource type="Texture2D" uid="uid://c23qttem5xev7" path="res://Textures/FirsReticle.png" id="4_c2s1b"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ev5jt"]
-shader = ExtResource("2_ox266")
-shader_parameter/reticle_color = Color(0.121569, 0.0784314, 1, 1)
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b34ca"]
+animation = &"BackAndForth"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jau1x"]
+animation = &"StartShooting"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4hhae"]
+animation = &"StopShooting"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5vky1"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jl6m6"]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hyij0"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vnu5b"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_app14"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_jyk2e"]
+states/BackAndForth/node = SubResource("AnimationNodeAnimation_b34ca")
+states/BackAndForth/position = Vector2(702.667, 59.1111)
+states/End/position = Vector2(1230, 196)
+states/Start/position = Vector2(153.333, 134.658)
+states/StartShooting/node = SubResource("AnimationNodeAnimation_jau1x")
+states/StartShooting/position = Vector2(428.667, 144)
+states/StopShooting/node = SubResource("AnimationNodeAnimation_4hhae")
+states/StopShooting/position = Vector2(967.333, 150.988)
+transitions = ["StartShooting", "BackAndForth", SubResource("AnimationNodeStateMachineTransition_5vky1"), "BackAndForth", "StopShooting", SubResource("AnimationNodeStateMachineTransition_jl6m6"), "StopShooting", "StartShooting", SubResource("AnimationNodeStateMachineTransition_hyij0"), "StopShooting", "End", SubResource("AnimationNodeStateMachineTransition_vnu5b"), "Start", "StartShooting", SubResource("AnimationNodeStateMachineTransition_app14")]
+
+[sub_resource type="Animation" id="Animation_eflfn"]
+resource_name = "StartShooting"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Center/Sprite2D:frame")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 1, 2, 4]
+}
+
+[sub_resource type="Animation" id="Animation_l02e7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Center/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_x4j5e"]
+resource_name = "BackAndForth"
+length = 0.15
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Center/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 3, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_nr6ps"]
+resource_name = "StopShooting"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Center/Sprite2D:frame")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 2, 0, 1, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5nyri"]
+_data = {
+"BackAndForth": SubResource("Animation_x4j5e"),
+"RESET": SubResource("Animation_l02e7"),
+"StartShooting": SubResource("Animation_eflfn"),
+"StopShooting": SubResource("Animation_nr6ps")
+}
 
 [node name="ReticleOverlay" type="CenterContainer"]
 anchors_preset = 15
@@ -19,9 +123,21 @@ script = ExtResource("1_wrlm1")
 [node name="Center" type="Control" parent="."]
 layout_mode = 2
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Center"]
+[node name="Sprite2D" type="Sprite2D" parent="Center"]
 unique_name_in_owner = true
+modulate = Color(0.164706, 0.164706, 0.164706, 1)
 texture_filter = 1
-material = SubResource("ShaderMaterial_ev5jt")
-scale = Vector2(3, 3)
-sprite_frames = ExtResource("1_qnd7w")
+scale = Vector2(4, 4)
+texture = ExtResource("4_c2s1b")
+hframes = 5
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+unique_name_in_owner = true
+tree_root = SubResource("AnimationNodeStateMachine_jyk2e")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5nyri")
+}

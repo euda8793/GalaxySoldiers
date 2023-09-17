@@ -1,0 +1,155 @@
+[gd_scene load_steps=6 format=3 uid="uid://c37ohwm1jafao"]
+
+[ext_resource type="Script" path="res://Scenes/WebRTCServerFinder.gd" id="1_8wnuo"]
+[ext_resource type="Script" path="res://Scenes/GameSessionClient.gd" id="2_q5w3m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nx7jt"]
+
+[sub_resource type="Theme" id="Theme_oof6i"]
+/colors/BackgroundColor = Color(0.768627, 0.113725, 0.117647, 1)
+/styles/Backdrop = SubResource("StyleBoxFlat_nx7jt")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_etd8q"]
+bg_color = Color(0.164706, 0.211765, 0.243137, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 15.0
+expand_margin_top = 15.0
+expand_margin_right = 15.0
+expand_margin_bottom = 15.0
+
+[node name="WebRTCServerFinder" type="MarginContainer"]
+offset_right = 525.0
+offset_bottom = 506.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_8wnuo")
+
+[node name="GameSessionClient" type="HTTPRequest" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_q5w3m")
+
+[node name="ListUpdateTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 5.0
+
+[node name="Margins" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_oof6i")
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="Panel" type="Panel" parent="Margins"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_etd8q")
+
+[node name="LeftSideContainer" type="VBoxContainer" parent="Margins"]
+layout_mode = 2
+
+[node name="PlayerInfo" type="VBoxContainer" parent="Margins/LeftSideContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="ApiKeySection" type="HBoxContainer" parent="Margins/LeftSideContainer/PlayerInfo"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ApiKeyLabel" type="Label" parent="Margins/LeftSideContainer/PlayerInfo/ApiKeySection"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_vertical = 0
+text = "API Key:"
+uppercase = true
+
+[node name="ApiKeyInput" type="TextEdit" parent="Margins/LeftSideContainer/PlayerInfo/ApiKeySection"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="PlayerNameSection" type="HBoxContainer" parent="Margins/LeftSideContainer/PlayerInfo"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PlayerNameLabel" type="Label" parent="Margins/LeftSideContainer/PlayerInfo/PlayerNameSection"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+text = "Player Name:"
+uppercase = true
+
+[node name="PlayerNameInput" type="LineEdit" parent="Margins/LeftSideContainer/PlayerInfo/PlayerNameSection"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Separator" type="HSeparator" parent="Margins/LeftSideContainer"]
+layout_mode = 2
+
+[node name="HostSection" type="VBoxContainer" parent="Margins/LeftSideContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+
+[node name="HostSection" type="HBoxContainer" parent="Margins/LeftSideContainer/HostSection"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="HostButton" type="Button" parent="Margins/LeftSideContainer/HostSection/HostSection"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "HOST"
+
+[node name="CreateHostName" type="LineEdit" parent="Margins/LeftSideContainer/HostSection/HostSection"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GameHosts" type="ItemList" parent="Margins/LeftSideContainer/HostSection"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/v_separation = 5
+theme_override_constants/line_separation = 11
+theme_override_constants/outline_size = 0
+item_count = 1
+same_column_width = true
+fixed_icon_size = Vector2i(30, 30)
+item_0/text = "Test Game"
+
+[node name="JoinSection" type="HBoxContainer" parent="Margins/LeftSideContainer/HostSection"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="JoinButton" type="Button" parent="Margins/LeftSideContainer/HostSection/JoinSection"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "JOIN"
+
+[node name="ExitButton" type="Button" parent="Margins/LeftSideContainer/HostSection/JoinSection"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "EXIT
+"
+
+[node name="RefreshButton" type="Button" parent="Margins/LeftSideContainer/HostSection/JoinSection"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "REFRESH"
+
+[connection signal="timeout" from="ListUpdateTimer" to="." method="_on_list_update_timer_timeout"]
+[connection signal="pressed" from="Margins/LeftSideContainer/HostSection/JoinSection/RefreshButton" to="." method="_on_refresh_button_pressed"]

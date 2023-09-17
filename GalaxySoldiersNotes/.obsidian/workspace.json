@@ -1,0 +1,153 @@
+{
+  "main": {
+    "id": "58abdb89ae57adac",
+    "type": "split",
+    "children": [
+      {
+        "id": "ec2f43b846bd53d3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "73f4fdd40ce81d79",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Galaxy Soldiers Brainstorming.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "0175eb40854c5224",
+    "type": "split",
+    "children": [
+      {
+        "id": "336daa9d38071c1a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3c47afb9c5df07c5",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "62b6a8c92eea91f4",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "f2aa0fb3ca77e9b8",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "4bc6c8be8e16a51d",
+    "type": "split",
+    "children": [
+      {
+        "id": "fc93bbfd790d8bb1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "840764d819a3ea34",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Galaxy Soldiers Brainstorming.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "27afc7d16b5020a7",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Galaxy Soldiers Brainstorming.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "bf2dff420ebb82ea",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "25fb9d54b8a37190",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Galaxy Soldiers Brainstorming.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "73f4fdd40ce81d79",
+  "lastOpenFiles": [
+    "Galaxy Soldiers Brainstorming.md"
+  ]
+}

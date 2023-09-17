@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cimscwwfeo64p"]
+[gd_scene load_steps=4 format=3 uid="uid://cimscwwfeo64p"]
 
 [ext_resource type="PackedScene" uid="uid://q4nyhqqgg7wu" path="res://Scenes/GrassyMap.tscn" id="1_4k5ed"]
 [ext_resource type="PackedScene" uid="uid://dtho7el3m8fpb" path="res://Scenes/PlayerCharacter.tscn" id="2_1vcsb"]
+[ext_resource type="PackedScene" uid="uid://c37ohwm1jafao" path="res://Scenes/WebRTCServerFinder.tscn" id="3_mjt4d"]
 
 [node name="GameInstance" type="Node3D"]
 
@@ -10,3 +11,6 @@ transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
 
 [node name="CharacterBody3D" parent="GrassyMap" instance=ExtResource("2_1vcsb")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 2.55)
+
+[node name="WebRTCServerFinder" parent="." instance=ExtResource("3_mjt4d")]
+offset_right = 476.0
